@@ -11,7 +11,7 @@ import { Toaster } from "react-hot-toast";
 import Home from './pages/Home'
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import EmployeeManagement from "./pages/EmployeeManagement";
-
+import TimeSheetManagement from './pages/TimesheetManagement'
 
 const router = createBrowserRouter([
   {
@@ -35,6 +35,10 @@ const router = createBrowserRouter([
       {
         path: "/employee-management",
         element: <EmployeeManagement />,
+      },
+      {
+        path: "/timesheet-management",
+        element: <TimeSheetManagement />,
       },
     ],
   },

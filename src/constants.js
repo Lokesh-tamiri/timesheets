@@ -34,7 +34,10 @@ export const methods= {
 }
 
 export const authEndpoints = {
-  login:`${baseUrl}/employee/login`
+  login:`${baseUrl}/employee/login`,
+  verify:`${baseUrl}/employee/get_current_user_from_token`
 }
 
-export const employeeEndpoints = {}
+export const employeeEndpoints = {
+  getAllEmployees:`${baseUrl}/employee/all`,
+}

@@ -1,15 +1,19 @@
 import { Form, Formik } from "formik";
-import React from "react";
+import React, { useState } from "react";
 import * as Yup from "yup";
 import TextField from "../../components/Forms/TextField";
 import { styles } from "../../styles";
 import logo from "../../assets/logo.svg";
+import VisibilityIcon from "@mui/icons-material/Visibility";
+import VisibilityOffIcon from "@mui/icons-material/VisibilityOff";
+import { Stack } from "@mui/material";
 const Presentation = (props) => {
   const { handleLogin } = props;
   const INITIAL_VALUES = {
     email: "",
     password: "",
   };
+  const [visibility, setVisibility] = useState(false);
   const VALIDATION_SCHEMA = Yup.object().shape({
     email: Yup.string().email("Enter valid email").required("Enter password"),
     password: Yup.string().required("Enter password"),
@@ -22,7 +26,7 @@ const Presentation = (props) => {
           initialValues={INITIAL_VALUES}
           validationSchema={VALIDATION_SCHEMA}
           onSubmit={(values) => {
-            handleLogin(values)
+            handleLogin(values);
           }}
           // className="hidden"
         >
@@ -36,8 +40,38 @@ const Presentation = (props) => {
             <TextField
               name="password"
               label="Password"
+              type={visibility?"text":"password"}
               style={{ marginTop: 15 }}
             />
+            {visibility ? (
+              <>
+                <VisibilityIcon style={{
+                  position:"absolute",
+                  marginTop:30,
+                  marginLeft:-40                  
+                }}
+                onClick={
+                  ()=>{
+                    setVisibility(!visibility)
+                  }
+                }
+                />
+              </>
+            ) : (
+              <>
+                <VisibilityOffIcon style={{
+                  position:"absolute",
+                  marginTop:30,
+                  marginLeft:-40
+                }}
+                onClick={
+                  ()=>{
+                    setVisibility(!visibility)
+                  }
+                }
+                />
+              </>
+            )}
             <button className={styles.primaryBtn} type="submit">
               Sign In
             </button>
