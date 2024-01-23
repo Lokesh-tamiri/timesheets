@@ -24,6 +24,7 @@ import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
 import timesheetLogo from "../assets/timesheet.svg";
 import { Button, Popover, Stack } from "@mui/material";
+import projectLogo from "../assets/project.svg";
 const drawerWidth = 300;
 
 const openedMixin = (theme) => ({
@@ -100,7 +101,14 @@ const adminNavLinks = [
   {
     label: "Project Management",
     link: "/project-management",
-    icon: <People />,
+    icon: (
+      <img
+        src={projectLogo}
+        style={{
+          height: 22,
+        }}
+      />
+    ),
   },
 ];
 
@@ -204,9 +212,11 @@ export default function MiniDrawer({ children }) {
                 horizontal: "left",
               }}
             >
-              <div style={{
-                margin:15
-              }}>
+              <div
+                style={{
+                  margin: 15,
+                }}
+              >
                 <Link
                   to={"/login"}
                   onClick={() => {
@@ -258,7 +268,6 @@ export default function MiniDrawer({ children }) {
                         minWidth: 0,
                         mr: open ? 3 : "auto",
                         justifyContent: "center",
-                        
                       }}
                     >
                       {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}

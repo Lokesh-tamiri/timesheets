@@ -11,7 +11,8 @@ import { Toaster } from "react-hot-toast";
 import Home from './pages/Home'
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import EmployeeManagement from "./pages/EmployeeManagement";
-import TimeSheetManagement from './pages/TimesheetManagement'
+import TimeSheetManagement from './pages/TimesheetManagement';
+import ProjectManagement from './pages/ProjectManagement';
 import "ag-grid-community/styles/ag-grid.css"; // Core CSS
 import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 const router = createBrowserRouter([
@@ -40,6 +41,10 @@ const router = createBrowserRouter([
       {
         path: "/timesheet-management",
         element: <TimeSheetManagement />,
+      },
+      {
+        path: "/project-management",
+        element: <ProjectManagement />,
       },
     ],
   },

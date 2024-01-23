@@ -40,7 +40,10 @@ export const authEndpoints = {
 
 export const adminEndpoints = {
   getAllUsers :`${baseUrl}/employee/get_all`,
-  createUser:`${baseUrl}/employee/add`
+  createUser:`${baseUrl}/employee/add`,
+  createProject:`${baseUrl}/project`,
+  getAllProjects:`${baseUrl}/project`,
+  deleteUser:`${baseUrl}/employee/delete`
 }
 
 export const employeeEndpoints = {

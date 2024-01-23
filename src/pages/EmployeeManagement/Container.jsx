@@ -5,8 +5,18 @@ import { useSelector } from "react-redux";
 import { adminEndpoints, apiCall, methods } from "../../constants";
 import toast from "react-hot-toast";
 import { styles } from "../../styles";
+import { Stack } from "@mui/material";
 
 const Container = () => {
+  const fetchData = useCallback(() => {
+    apiCall(adminEndpoints.getAllUsers, methods.get, null, token)
+      .then((data) => setRowData(data.data))
+      .catch((err) => {
+        toast.error("Session Expired!");
+        localStorage.removeItem("token");
+        navigate("/login");
+      });
+  }, []);
   const token = localStorage.getItem("token");
 
   const columnDefs = [
@@ -28,13 +38,54 @@ const Container = () => {
       cellRenderer: "agAnimateShowChangeCellRenderer",
     },
     {
-      headerName: "ACtions",
+      headerName: "Actions",
       // field: "",
-      cellRenderer: () => (
-        <>
-          <button className="bg-red-700 text-white font-semibold text-md hover:bg-red-600 w-full rounded-full h-9 flex items-center justify-center mt-1">Delete</button>
-        </>
-      ),
+      cellRenderer: (params) => {
+        return (
+          <Stack gap={3} direction="row">
+            <button
+              className="bg-red-700 text-white font-semibold text-md hover:bg-red-600 w-full rounded-full h-9 flex items-center justify-center mt-1"
+              onClick={() => {
+                apiCall(
+                  `${adminEndpoints.deleteUser}/?email_id=${params.data.email}`,
+                  methods.del,
+                  null,
+                  token
+                )
+                  .then((data) => {
+                    toast.success("Successfully Deleted Employee!");
+                    fetchData();
+                  })
+                  .catch((err) => {
+                    alert("Error while deleting employee");
+                  });
+              }}
+            >
+              Delete
+            </button>
+            <button
+              className="bg-blue-700 text-white font-semibold text-md hover:bg-blue-600 w-full rounded-full h-9 flex items-center justify-center mt-1"
+              onClick={() => {
+                apiCall(
+                  `${adminEndpoints.deleteUser}/?email_id=${params.data.email}`,
+                  methods.del,
+                  null,
+                  token
+                )
+                  .then((data) => {
+                    toast.success("Successfully Deleted Employee!");
+                    fetchData();
+                  })
+                  .catch((err) => {
+                    alert("Error while deleting employee");
+                  });
+              }}
+            >
+              Update
+            </button>
+          </Stack>
+        );
+      },
     },
   ];
   const defaultColDef = {
@@ -43,15 +94,7 @@ const Container = () => {
     // floatingFilter: true,
   };
   const [rowData, setRowData] = useState([]);
-  const fetchData = useCallback(() => {
-    apiCall(adminEndpoints.getAllUsers, methods.get, null, token)
-      .then((data) => setRowData(data.data))
-      .catch((err) => {
-        toast.error("Session Expired!");
-        localStorage.removeItem("token");
-        navigate("/login");
-      });
-  }, []);
+
   useEffect(() => {
     fetchData();
   }, []);
