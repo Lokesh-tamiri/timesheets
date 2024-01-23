@@ -9,7 +9,7 @@ export default function ProtectedRoutes() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   useEffect(() => {
-    apiCall(`${authEndpoints.verify}/?access_token=${token}`,methods.get,null,token).then((data) => {
+    apiCall(`${authEndpoints.verify}/`,methods.get,null,token).then((data) => {
       // console.log(data)
       dispatch(setUser(data.data))
     }).catch(err=>{

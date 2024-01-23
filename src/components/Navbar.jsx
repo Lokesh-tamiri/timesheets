@@ -19,10 +19,11 @@ import ListItemText from "@mui/material/ListItemText";
 import InboxIcon from "@mui/icons-material/MoveToInbox";
 import MailIcon from "@mui/icons-material/Mail";
 import logo from "../assets/logo.svg";
-import { People } from "@mui/icons-material";
+import { People, Person, Person2 } from "@mui/icons-material";
 import { Link } from "react-router-dom";
 import { useSelector } from "react-redux";
-import timesheetLogo from '../assets/timesheet.svg'
+import timesheetLogo from "../assets/timesheet.svg";
+import { Button, Popover, Stack } from "@mui/material";
 const drawerWidth = 300;
 
 const openedMixin = (theme) => ({
@@ -96,19 +97,30 @@ const adminNavLinks = [
     link: "/employee-management",
     icon: <People />,
   },
+  {
+    label: "Project Management",
+    link: "/project-management",
+    icon: <People />,
+  },
 ];
 
 const userNavLinks = [
   {
-    label:"Timesheet Management",
-    link:"/timesheet-management",
-    icon: <img src={timesheetLogo} style={{
-      height:22,
-    }}/>
-  }
-]
+    label: "Timesheet Management",
+    link: "/timesheet-management",
+    icon: (
+      <img
+        src={timesheetLogo}
+        style={{
+          height: 22,
+        }}
+      />
+    ),
+  },
+];
 
 export default function MiniDrawer({ children }) {
+  const [stateUpdate, setStateUpate] = React.useState(false);
   const user = useSelector((state) => state.authReducer.user);
 
   const theme = useTheme();
@@ -117,7 +129,18 @@ export default function MiniDrawer({ children }) {
   const handleDrawerOpen = () => {
     setOpen(true);
   };
+  const [anchorEl, setAnchorEl] = React.useState(null);
 
+  const handleClick = (event) => {
+    setAnchorEl(event.currentTarget);
+  };
+
+  const handleClose = () => {
+    setAnchorEl(null);
+  };
+
+  const openPop = Boolean(anchorEl);
+  const id = openPop ? "simple-popover" : undefined;
   const handleDrawerClose = () => {
     setOpen(false);
   };
@@ -149,14 +172,52 @@ export default function MiniDrawer({ children }) {
           {/* <Typography variant="h6" noWrap component="div">
             Mini variant drawer
           </Typography> */}
-          <Link to="/home">
-            <img
-              src={logo}
-              style={{
-                height: 48,
+
+          <Stack
+            direction={"row"}
+            justifyContent={"space-between"}
+            sx={{ width: "100%" }}
+            alignItems={"center"}
+          >
+            <Link to="/home">
+              <img
+                src={logo}
+                style={{
+                  height: 48,
+                }}
+              />
+            </Link>
+            <div
+              aria-describedby={id}
+              onClick={handleClick}
+              className="cursor-pointer"
+            >
+              <Person sx={{ color: "black" }} />
+            </div>
+            <Popover
+              id={id}
+              open={openPop}
+              anchorEl={anchorEl}
+              onClose={handleClose}
+              anchorOrigin={{
+                vertical: "bottom",
+                horizontal: "left",
               }}
-            />
-          </Link>
+            >
+              <div style={{
+                margin:15
+              }}>
+                <Link
+                  to={"/login"}
+                  onClick={() => {
+                    localStorage.clear();
+                  }}
+                >
+                  Logout
+                </Link>
+              </div>
+            </Popover>
+          </Stack>
         </Toolbar>
       </AppBar>
       <Drawer variant="permanent" open={open}>
@@ -184,6 +245,10 @@ export default function MiniDrawer({ children }) {
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
+                      background:
+                        window.location.pathname === adminNav.link
+                          ? "rgba(0, 0, 0, 0.08)"
+                          : "",
                     }}
                     component={Link}
                     to={adminNav.link}
@@ -193,6 +258,7 @@ export default function MiniDrawer({ children }) {
                         minWidth: 0,
                         mr: open ? 3 : "auto",
                         justifyContent: "center",
+                        
                       }}
                     >
                       {/* {index % 2 === 0 ? <InboxIcon /> : <MailIcon />} */}
@@ -217,9 +283,16 @@ export default function MiniDrawer({ children }) {
                       minHeight: 48,
                       justifyContent: open ? "initial" : "center",
                       px: 2.5,
+                      background:
+                        window.location.pathname === adminNav.link
+                          ? "rgba(0, 0, 0, 0.08)"
+                          : "",
                     }}
                     component={Link}
                     to={adminNav.link}
+                    onClick={() => {
+                      setStateUpate(!stateUpdate);
+                    }}
                   >
                     <ListItemIcon
                       sx={{

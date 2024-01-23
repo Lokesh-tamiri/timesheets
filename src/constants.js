@@ -38,6 +38,11 @@ export const authEndpoints = {
   verify:`${baseUrl}/employee/get_current_user_from_token`
 }
 
+export const adminEndpoints = {
+  getAllUsers :`${baseUrl}/employee/get_all`,
+  createUser:`${baseUrl}/employee/add`
+}
+
 export const employeeEndpoints = {
   getAllEmployees:`${baseUrl}/employee/all`,
 }

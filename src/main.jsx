@@ -12,7 +12,8 @@ import Home from './pages/Home'
 import ProtectedRoutes from "./routes/ProtectedRoutes";
 import EmployeeManagement from "./pages/EmployeeManagement";
 import TimeSheetManagement from './pages/TimesheetManagement'
-
+import "ag-grid-community/styles/ag-grid.css"; // Core CSS
+import "ag-grid-community/styles/ag-theme-quartz.css"; // Theme
 const router = createBrowserRouter([
   {
     path: "/",
