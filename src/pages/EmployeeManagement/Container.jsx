@@ -6,6 +6,7 @@ import { adminEndpoints, apiCall, methods } from "../../constants";
 import toast from "react-hot-toast";
 import { styles } from "../../styles";
 import { Stack } from "@mui/material";
+import AssignProject from "./components/AssignProject";
 
 const Container = () => {
   const fetchData = useCallback(() => {
@@ -39,10 +40,16 @@ const Container = () => {
     // },
     {
       headerName: "Actions",
+      cellClass: "ag-cell-center",
+      width: "100%", // Set the desired width for the column
+      // maxWidth:400,
+      minWidth: 550,
+      resizable: true,
       // field: "",
       cellRenderer: (params) => {
         return (
-          <Stack gap={3} direction="row">
+          <Stack gap={3} direction="row" sx={{ minWidth: 500 }}>
+            <AssignProject />
             <button
               className="bg-red-700 text-white font-semibold text-md hover:bg-red-600 w-full rounded-full h-9 flex items-center justify-center mt-1"
               onClick={() => {
