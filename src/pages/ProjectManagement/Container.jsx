@@ -52,7 +52,7 @@ const Container = () => {
   useEffect(() => {
     fetchData();
   }, []);
-  return <Presentation columnDefs={columnDefs} rowData={rowData}/>;
+  return <Presentation columnDefs={columnDefs} rowData={rowData} fetchData={fetchData}/>;
 };
 
 export default Container;

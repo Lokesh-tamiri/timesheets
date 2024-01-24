@@ -48,4 +48,5 @@ export const adminEndpoints = {
 
 export const employeeEndpoints = {
   getAllEmployees:`${baseUrl}/employee/all`,
+  getAllTimesheets:`${baseUrl}/timesheet/employee_timesheets/`
 }

@@ -27,16 +27,16 @@ const Container = () => {
     { headerName: "Email", field: "email" },
     { headerName: "User Type", field: "user_type" },
     { headerName: "Employment Type", field: "employment_type" },
-    {
-      headerName: "First Time User",
-      field: "is_first_time_user",
-      cellRenderer: "agAnimateShowChangeCellRenderer",
-    },
-    {
-      headerName: "Active",
-      field: "is_active",
-      cellRenderer: "agAnimateShowChangeCellRenderer",
-    },
+    // {
+    //   headerName: "First Time User",
+    //   field: "is_first_time_user",
+    //   cellRenderer: "agAnimateShowChangeCellRenderer",
+    // },
+    // {
+    //   headerName: "Active",
+    //   field: "is_active",
+    //   cellRenderer: "agAnimateShowChangeCellRenderer",
+    // },
     {
       headerName: "Actions",
       // field: "",

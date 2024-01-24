@@ -1,14 +1,15 @@
 import React, { useCallback, useState } from "react";
 import { styles } from "../../../styles";
 import { Box, Modal } from "@mui/material";
-import TextField from '../../../components/Forms/TextField'
+import TextField from "../../../components/Forms/TextField";
 import { Form, Formik } from "formik";
 import * as Yup from "yup";
 import { adminEndpoints, apiCall, methods } from "../../../constants";
 import toast from "react-hot-toast";
-const CreateProject = () => {
+const CreateProject = (props) => {
+  const { fetchData } = props;
   const token = localStorage.getItem("token");
-
+  // console.log("here");
   const [open, setOpen] = useState(false);
   const handleClose = useCallback(() => setOpen(false));
   const handleOpen = useCallback(() => setOpen(true));
@@ -18,9 +19,7 @@ const CreateProject = () => {
     project_description: "",
   };
   const VALIDATION_SCHEMA = Yup.object().shape({
-    project_id: Yup.number("Please enter only numbers").required(
-      "Project Id is required"
-    ),
+    project_id: Yup.string().required("Project Id is required"),
     project_name: Yup.string().required("Project Name is required"),
     project_description: Yup.string().required(
       "Project Description is required"
@@ -28,12 +27,15 @@ const CreateProject = () => {
   });
   const handleSubmit = useCallback((values) => {
     apiCall(adminEndpoints.createProject, methods.post, values, token)
-      .then((data) => toast.success("Project added successfully!"))
+      .then((data) => {
+        toast.success("Project added successfully!");
+        setOpen(false);
+        fetchData();
+      })
       .catch((err) => toast.error("Error while creating project!"));
   }, []);
   return (
     <div>
-      
       <button className={styles.primaryBtn} onClick={handleOpen}>
         Create Project
       </button>
