@@ -9,6 +9,7 @@ import { Stack } from "@mui/material";
 import AssignProject from "./components/AssignProject";
 
 const Container = () => {
+  const [projects,setProjects] = useState([])
   const fetchData = useCallback(() => {
     apiCall(adminEndpoints.getAllUsers, methods.get, null, token)
       .then((data) => setRowData(data.data))
@@ -18,6 +19,11 @@ const Container = () => {
         navigate("/login");
       });
   }, []);
+  const fetchProjects = useCallback(()=>{
+    apiCall(adminEndpoints.getAllProjects,methods.get,null,token).then((data)=>{
+      setProjects(data.data);
+    })
+  },[])
   const token = localStorage.getItem("token");
 
   const columnDefs = [
@@ -49,7 +55,7 @@ const Container = () => {
       cellRenderer: (params) => {
         return (
           <Stack gap={3} direction="row" sx={{ minWidth: 500 }}>
-            <AssignProject />
+            <AssignProject projects={projects} data={params.data}/>
             <button
               className="bg-red-700 text-white font-semibold text-md hover:bg-red-600 w-full rounded-full h-9 flex items-center justify-center mt-1"
               onClick={() => {
@@ -104,6 +110,7 @@ const Container = () => {
 
   useEffect(() => {
     fetchData();
+    fetchProjects();
   }, []);
   const user = useSelector((state) => state.authReducer.user);
   const navigate = useNavigate();
@@ -120,6 +127,7 @@ const Container = () => {
       rowData={rowData}
       defaultColDef={defaultColDef}
       fetchData={fetchData}
+      projects={projects}
     />
   );
 };

@@ -56,9 +56,10 @@ const CreateEmployee = (props) => {
             validationSchema={VALIDATION_SCHEMA}
             onSubmit={(values) => {
               apiCall(adminEndpoints.createUser, methods.post, values, token)
-                .then(() => {
+                .then(async () => {
+                  setOpen(false);
+                  await fetchData();
                   toast.success("Successfully added!");
-                  fetchData();
                 })
                 .catch((err) => {
                   localStorage.clear();
@@ -73,8 +74,10 @@ const CreateEmployee = (props) => {
                 gap: 15,
                 flexDirection: "column",
                 maxHeight: 400,
-                overflow: "scroll",
+                overflowY: "scroll",
+                // padding:5
               }}
+              className="px-5 py-8"
             >
               <TextField name="first_name" label="First Name" />
               <TextField name="last_name" label="Last Name" />

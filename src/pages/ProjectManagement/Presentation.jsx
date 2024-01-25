@@ -5,7 +5,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 const Presentation = (props) => {
   const { columnDefs, rowData, fetchData } = props;
-  console.log(fetchData);
+  // console.log(fetchData);
   return (
     <div>
       <div className="flex justify-end gap-4">

@@ -4,7 +4,7 @@ import "ag-grid-community/styles/ag-grid.css";
 import "ag-grid-community/styles/ag-theme-material.css";
 import CreateEmployee from "./components/CreateEmployee";
 const Presentation = (props) => {
-  const { rowData, columnDefs, fetchData } = props;
+  const { rowData, columnDefs, fetchData,projects } = props;
   return (
     <div>
       <div className="flex justify-end mb-5">

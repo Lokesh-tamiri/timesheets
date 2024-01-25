@@ -13,9 +13,12 @@ export const apiCall = async (url, method, data = null, token = null) => {
       url,
       headers,
     };
+
     if (data) {
       config.data = data;
     }
+  console.log(config)
+
     const response = await axios(config);
     if (response.status >= 400) {
       return { data: response.data, status: response.status };
@@ -43,7 +46,10 @@ export const adminEndpoints = {
   createUser:`${baseUrl}/employee/add`,
   createProject:`${baseUrl}/project`,
   getAllProjects:`${baseUrl}/project`,
-  deleteUser:`${baseUrl}/employee/delete`
+  deleteUser:`${baseUrl}/employee/delete`,
+  assignProject:`${baseUrl}/employee_project`,
+  getAssignedProjects:`${baseUrl}/employee_project`,
+  getAssignedProjectsById:`${baseUrl}/employee_project/project_ids_by_employee_id`
 }
 
 export const employeeEndpoints = {
