@@ -9,7 +9,7 @@ import { Stack } from "@mui/material";
 import AssignProject from "./components/AssignProject";
 
 const Container = () => {
-  const [projects,setProjects] = useState([])
+  const [projects, setProjects] = useState([]);
   const fetchData = useCallback(() => {
     apiCall(adminEndpoints.getAllUsers, methods.get, null, token)
       .then((data) => setRowData(data.data))
@@ -19,11 +19,13 @@ const Container = () => {
         navigate("/login");
       });
   }, []);
-  const fetchProjects = useCallback(()=>{
-    apiCall(adminEndpoints.getAllProjects,methods.get,null,token).then((data)=>{
-      setProjects(data.data);
-    })
-  },[])
+  const fetchProjects = useCallback(() => {
+    apiCall(adminEndpoints.getAllProjects, methods.get, null, token).then(
+      (data) => {
+        setProjects(data.data);
+      }
+    );
+  }, []);
   const token = localStorage.getItem("token");
 
   const columnDefs = [
@@ -55,7 +57,9 @@ const Container = () => {
       cellRenderer: (params) => {
         return (
           <Stack gap={3} direction="row" sx={{ minWidth: 500 }}>
-            <AssignProject projects={projects} data={params.data}/>
+            {params.user_type !== "admin" && (
+              <AssignProject projects={projects} data={params.data} fetchData={fetchData} />
+            )}
             <button
               className="bg-red-700 text-white font-semibold text-md hover:bg-red-600 w-full rounded-full h-9 flex items-center justify-center mt-1"
               onClick={() => {
@@ -107,7 +111,7 @@ const Container = () => {
     // floatingFilter: true,
   };
   const [rowData, setRowData] = useState([]);
-
+  const finalRowData = rowData.filter((item) => item.employee_id !== "1");
   useEffect(() => {
     fetchData();
     fetchProjects();
@@ -124,7 +128,7 @@ const Container = () => {
   return (
     <Presentation
       columnDefs={columnDefs}
-      rowData={rowData}
+      rowData={finalRowData}
       defaultColDef={defaultColDef}
       fetchData={fetchData}
       projects={projects}

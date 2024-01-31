@@ -15,19 +15,19 @@ const Container = () => {
       cellClass: "ag-cell-center", // Add any additional styling classes as needed
       width: "100%", // Set the desired width for the column
       maxWidth:400,
-      minWidth:200,
+      minWidth:500,
       cellRenderer: "agGroupCellRenderer", // You can customize the cell renderer if needed
     },
-    {
-      headerName: "Project ID",
-      field: "project_id",
-      sortable: true,
-      filter: true,
-      cellClass: "ag-cell-center",
-      width: "100%", // Set the desired width for the column
-      maxWidth:400,
-      minWidth:200,
-    },
+    // {
+    //   headerName: "Project ID",
+    //   field: "project_id",
+    //   sortable: true,
+    //   filter: true,
+    //   cellClass: "ag-cell-center",
+    //   width: "100%", // Set the desired width for the column
+    //   maxWidth:400,
+    //   minWidth:200,
+    // },
     {
       headerName: "Project Name",
       field: "project_name",

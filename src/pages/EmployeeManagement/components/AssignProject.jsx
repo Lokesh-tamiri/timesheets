@@ -12,7 +12,7 @@ import toast from "react-hot-toast";
 const AssignProject = (props) => {
   const token = localStorage.getItem("token");
 
-  const { projects, data } = props;
+  const { projects, data, fetchData } = props;
   const [selectedProjects, setSelectedProjects] = useState([]);
   const [assignedProjects, setAssignedProjects] = useState([]);
 
@@ -37,27 +37,45 @@ const AssignProject = (props) => {
       token
     ).then((data) => {
       const arr = data.data;
-      if(arr.length>0){
-        console.log(arr)
+      if (arr.length > 0) {
+        // setAssignedProjects(arr[0])
+        const newArr = arr[0].split(",");
+        const finalArr = newArr.map((item) => {
+          return {
+            name: item,
+          };
+        });
+        console.log(finalArr);
+        setAssignedProjects(finalArr);
       }
     });
   }, []);
   const handleSubmit = () => {
-    const joinedProjects = selectedProjects
-      .map((project) => project.id)
-      .join(",");
-    const submitData = {
-      employee_id: data.employee_id,
-      project_id: joinedProjects,
-    };
+    if (selectedProjects.length > 0) {
+      const joinedProjects = selectedProjects
+        .map((project) => project.name)
+        .join(",");
+      const submitData = {
+        employee_id: data.employee_id,
+        project_id: joinedProjects,
+      };
 
-    apiCall(adminEndpoints.assignProject, methods.post, submitData, token).then(
-      (e) => {
+      apiCall(
+        adminEndpoints.assignProject,
+        methods.post,
+        submitData,
+        token
+      ).then((e) => {
         console.log(e);
         toast.success("Project Assigned Successfully");
         handleClose();
-      }
-    );
+        fetchData();
+      });
+    }
+    else{
+      toast.dismiss();
+      toast.error("Please select minimum one Project")
+    }
   };
 
   useEffect(() => {
@@ -77,7 +95,7 @@ const AssignProject = (props) => {
             displayValue="name"
             onRemove={(e) => setSelectedProjects(e)}
             onSelect={(e) => setSelectedProjects(e)}
-            // selectedValues={}
+            selectedValues={assignedProjects}
             options={projectData}
           />
           <div className="flex justify-center">

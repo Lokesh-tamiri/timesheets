@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const baseUrl = "http://34.227.225.181:8080/api/v1";
+const baseUrl = "http://34.227.225.181:8000/api/v1";
 
 export const apiCall = async (url, method, data = null, token = null) => {
   try {
@@ -53,6 +53,6 @@ export const adminEndpoints = {
 }
 
 export const employeeEndpoints = {
-  getAllEmployees:`${baseUrl}/employee/all`,
-  getAllTimesheets:`${baseUrl}/timesheet/employee_timesheets/`
+  getAllTimesheets:`${baseUrl}/timesheet/employee_timesheets/`,
+  getAssignedProjects:`${baseUrl}/employee_project/employee_projects`
 }

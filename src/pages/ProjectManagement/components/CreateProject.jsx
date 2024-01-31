@@ -14,19 +14,19 @@ const CreateProject = (props) => {
   const handleClose = useCallback(() => setOpen(false));
   const handleOpen = useCallback(() => setOpen(true));
   const INITIAL_VALUES = {
-    project_id: "",
+    // project_id: "",
     project_name: "",
     project_description: "",
   };
   const VALIDATION_SCHEMA = Yup.object().shape({
-    project_id: Yup.string().required("Project Id is required"),
+    // project_id: Yup.string().required("Project Id is required"),
     project_name: Yup.string().required("Project Name is required"),
     project_description: Yup.string().required(
       "Project Description is required"
     ),
   });
   const handleSubmit = useCallback((values) => {
-    apiCall(adminEndpoints.createProject, methods.post, values, token)
+    apiCall(adminEndpoints.createProject, methods.post, {...values,project_id:values.project_name}, token)
       .then((data) => {
         toast.success("Project added successfully!");
         setOpen(false);
@@ -47,11 +47,11 @@ const CreateProject = (props) => {
             onSubmit={handleSubmit}
           >
             <Form className="flex flex-col gap-4 justify-center items-center">
-              <TextField
+              {/* <TextField
                 name="project_id"
                 label="Project Id"
                 className="w-full"
-              />
+              /> */}
               <TextField
                 name="project_name"
                 label="Project Name"
