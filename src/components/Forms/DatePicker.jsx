@@ -1,30 +1,43 @@
-// CustomDatePicker.js
-import React from 'react';
-import { useField, useFormikContext } from 'formik';
-import { KeyboardDatePicker, MuiPickersUtilsProvider } from '@material-ui/pickers';
-import DateFnsUtils from '@date-io/date-fns';
+import React from "react";
+import { useField, useFormikContext } from "formik";
+import { DatePicker } from "@mui/x-date-pickers/DatePicker";
+import { AdapterDayjs } from "@mui/x-date-pickers/AdapterDayjs";
+import { TextField } from "@mui/material";
+import { LocalizationProvider } from "@mui/x-date-pickers";
 
-const CustomDatePicker = ({ name, label, ...rest }) => {
+const FormikDatePicker = ({ name, ...otherProps }) => {
   const { setFieldValue } = useFormikContext();
   const [field, meta] = useField(name);
-
-  const handleChange = (date) => {
-    setFieldValue(name, date);
+  const handleChange = (value) => {
+    setFieldValue(name, `${value.$y}-${value.$M + 1}-${value.$D}`);
   };
 
+  const configDatePicker = {
+    ...field,
+    ...otherProps,
+    fullWidth: true,
+    variant: "outlined",
+    onChange: handleChange,
+    error:true,
+    helperText:meta.error
+  };
+  
   return (
-    <MuiPickersUtilsProvider utils={DateFnsUtils}>
-      <KeyboardDatePicker
-        {...field}
-        {...rest}
-        label={label}
-        format="MM/dd/yyyy"
-        onChange={handleChange}
-        error={meta.touched && !!meta.error}
-        helperText={meta.touched && meta.error}
+    <LocalizationProvider dateAdapter={AdapterDayjs}>
+      <DatePicker
+        {...configDatePicker}
+        renderInput={(props) => <TextField {...props} />}
       />
-    </MuiPickersUtilsProvider>
+      {meta.touched && meta.error && (
+        <p style={{ color: "red",fontSize:12,fontWeight:"lighter" }}>{meta.error}</p>
+      )}
+    </LocalizationProvider>
   );
 };
 
-export default CustomDatePicker;
+export default FormikDatePicker;
+
+
+
+
+
