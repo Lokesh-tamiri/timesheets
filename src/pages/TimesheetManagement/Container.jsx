@@ -107,6 +107,7 @@ const Container = () => {
       VALIDATION_SCHEMA={VALIDATION_SCHEMA}
       rowData={rowData}
       columnDefs={columnDefs}
+      fetchData={fetchData}
     />
   );
 };

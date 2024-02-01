@@ -45,7 +45,6 @@ const AssignProject = (props) => {
             name: item,
           };
         });
-        console.log(finalArr);
         setAssignedProjects(finalArr);
       }
     });
@@ -66,7 +65,6 @@ const AssignProject = (props) => {
         submitData,
         token
       ).then((e) => {
-        console.log(e);
         toast.success("Project Assigned Successfully");
         handleClose();
         fetchData();

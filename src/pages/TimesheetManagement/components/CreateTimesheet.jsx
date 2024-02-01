@@ -10,7 +10,8 @@ import toast from "react-hot-toast";
 import { useNavigate } from "react-router-dom";
 import FormikDatePicker from "../../../components/Forms/DatePicker";
 import { useSelector } from "react-redux";
-const CreateTimesheet = () => {
+const CreateTimesheet = (props) => {
+  const { fetchData } = props;
   const user = useSelector((state) => state.authReducer.user);
   const [open, setOpen] = useState(false);
   const [assignedProjects, setAssignedProjects] = useState([]);
@@ -35,7 +36,12 @@ const CreateTimesheet = () => {
   const handleAddTimesheet = (values) => {
     // console.log(values)
     apiCall(employeeEndpoints.createTimesheet, methods.post, values, token)
-      .then((data) => console.log(data))
+      .then((data) => {
+        toast.dismiss();
+        setOpen(false);
+        toast.success(data.message);
+        fetchData();
+      })
       .catch((err) => {
         localStorage.clear();
         toast.dismiss();

@@ -15,17 +15,30 @@ const Container = () => {
       .then((data) => setRowData(data.data))
       .catch((err) => {
         localStorage.clear();
+        toast.dismiss();
+        toast.error("Session timed out!");
         navigate("/login");
       });
   }, []);
-  const handleDelete = (data)=>{
-    console.log(data)
-    apiCall(`${adminEndpoints.deleteProject}/?project_id=${data.project_id}`,methods.del,null,token).then(data=>{
-      toast.dismiss();
-      toast.success("Project Deleted Successfully!")
-      fetchData();
-    }).catch(err=>console.log(err));
-  }
+  const handleDelete = (data) => {
+    apiCall(
+      `${adminEndpoints.deleteProject}/?project_id=${data.project_id}`,
+      methods.del,
+      null,
+      token
+    )
+      .then((data) => {
+        toast.dismiss();
+        toast.success("Project Deleted Successfully!");
+        fetchData();
+      })
+      .catch((err) => {
+        localStorage.clear();
+        toast.dismiss();
+        toast.error("Session timed out!");
+        navigate("/login");
+      });
+  };
   const columnDefs = [
     {
       headerName: "Project Description",
@@ -72,7 +85,7 @@ const Container = () => {
             className={
               " bg-red-600 px-12 max-h-10 flex justify-center items-center mt-[2px] text-white font-semibold  rounded-full hover:bg-red-500"
             }
-            onClick={()=>handleDelete(params.data)}
+            onClick={() => handleDelete(params.data)}
           >
             Delete
           </button>

@@ -9,7 +9,6 @@ const Container = () => {
   const handleLogin = (data)=>{
     apiCall(authEndpoints.login,methods.post,data).then(data=>{
       toast.success("Login Successful!");
-      console.log(data);
       localStorage.setItem("token",data.access_token);
       navigate("/home");
     })
